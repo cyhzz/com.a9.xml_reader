@@ -19,7 +19,7 @@ using ICSharpCode;
 using WeChatWASM;
 #endif
 
-namespace Com.A9.xmlReader
+namespace Com.A9.FileReader
 {
     public static class xmlReader
     {

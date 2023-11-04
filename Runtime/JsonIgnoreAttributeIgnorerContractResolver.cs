@@ -4,7 +4,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
-namespace Com.A9.xmlReader
+namespace Com.A9.FileReader
 {
     public class JsonIgnoreAttributeIgnorerContractResolver : DefaultContractResolver
     {

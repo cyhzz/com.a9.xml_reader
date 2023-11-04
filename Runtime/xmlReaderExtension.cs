@@ -5,7 +5,7 @@ using UnityEngine;
 using Excel;
 using System;
 using System.Linq;
-namespace Com.A9.xmlReader
+namespace Com.A9.FileReader
 {
     public static class xmlReaderExtension
     {
