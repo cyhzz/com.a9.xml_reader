@@ -133,6 +133,23 @@ namespace Com.A9.FileReader
         Debug.Log("didnt have local storage");
         t = default(T);
     }
+public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings setting)
+    {
+        WXFileSystemManager fs = WX.GetFileSystemManager();
+
+        if (fs.AccessSync(WX.env.USER_DATA_PATH + "/" + fileName).Equals("access:ok"))
+        {
+            string data = fs.ReadFileSync(WX.env.USER_DATA_PATH + "/" + fileName, "utf-8");
+            if (data != "")
+            {
+                t = JsonConvert.DeserializeObject<T>(data,setting);
+                Debug.Log("have local storage");
+                return;
+            }
+        }
+        Debug.Log("didnt have local storage");
+        t = default(T);
+    }
 #else
         public static void ReadJson<T>(string fileName, out T t, bool full_type = false)
         {
@@ -157,6 +174,31 @@ namespace Com.A9.FileReader
                     var items = JsonConvert.DeserializeObject<T>(json);
                     t = items;
                 }
+                r.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+                r?.Close();
+                File.Delete(path + fileName);
+                t = default(T);
+            }
+        }
+
+        public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings setting)
+        {
+            if (!File.Exists(path + fileName))
+            {
+                t = default(T);
+                return;
+            }
+            StreamReader r = null;
+            try
+            {
+                r = new StreamReader(path + fileName);
+                var json = r.ReadToEnd();
+                var items = JsonConvert.DeserializeObject<T>(json, setting);
+                t = items;
                 r.Close();
             }
             catch (Exception ex)
