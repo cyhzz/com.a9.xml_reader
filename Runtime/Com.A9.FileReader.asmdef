@@ -1,3 +1,16 @@
 {
-	"name": "Com.A9.FileReader"
+    "name": "Com.A9.FileReader",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5efd170ecd8084500bed5692932fe14e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
