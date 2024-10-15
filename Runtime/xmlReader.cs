@@ -280,8 +280,6 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
 
         public static bool EditorFileExist(string sub_dir, string file_name)
         {
-            List<string> cps = new List<string>();
-            List<string> path = new List<string>();
             var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
             entries.Append(Application.dataPath + "/" + sub_dir);
 
@@ -309,6 +307,33 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
             );
 
             return found;
+        }
+
+        public static List<FileInfo> EditorGetAllFile(string sub_dir)
+        {
+            List<FileInfo> path = new List<FileInfo>();
+            var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
+            entries.Append(Application.dataPath + "/" + sub_dir);
+
+            entries.ForEach(c =>
+            {
+                if (c.Contains('.'))
+                {
+                    return;
+                }
+                FileInfo[] info = new DirectoryInfo(c).GetFiles("*.*");
+                foreach (FileInfo f in info)
+                {
+                    if (f.Name.Contains(".meta"))
+                    {
+                        continue;
+                    }
+                    path.Add(f);
+                }
+            }
+            );
+
+            return path;
         }
     }
 }
