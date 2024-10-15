@@ -313,6 +313,10 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
         {
             List<FileInfo> path = new List<FileInfo>();
             var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
+            for (int i = 0; i < entries.Count; i++)
+            {
+                Debug.Log(entries[i]);
+            }
             entries.Append(Application.dataPath + "/" + sub_dir + "/");
 
             entries.ForEach(c =>
