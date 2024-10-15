@@ -14,6 +14,7 @@ using System.Net;
 using System.Threading;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode;
+using Codice.CM.WorkspaceServer.DataStore.IncomingChanges;
 
 #if UNITY_WEBGL
 using WeChatWASM;
@@ -99,6 +100,15 @@ namespace Com.A9.FileReader
         }
 #endif
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+        public static void Delete(string fileName)
+        {
+            string json = JsonConvert.SerializeObject(t);
+            WXFileSystemManager fs = WX.GetFileSystemManager();
+            fs.Delete(WX.env.USER_DATA_PATH + "/" + fileName);
+            Debug.Log("delete wechat local storage " + WX.env.USER_DATA_PATH);
+        }
+#else
         public static void Delete(string fileName)
         {
             if (!File.Exists(path + fileName))
@@ -107,6 +117,7 @@ namespace Com.A9.FileReader
             }
             System.IO.File.Delete(path + fileName);
         }
+#endif
         public static void DeleteAtPath(string path)
         {
             if (!File.Exists(path))
@@ -268,6 +279,37 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
             return n;
         }
 
+        public static bool EditorFileExist(string sub_dir, string file_name)
+        {
+            List<string> cps = new List<string>();
+            List<string> path = new List<string>();
+            var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
+
+            bool found = false;
+            entries.ForEach(c =>
+            {
+                if (c.Contains('.'))
+                {
+                    return;
+                }
+                FileInfo[] info = new DirectoryInfo(c).GetFiles("*.*");
+                foreach (FileInfo f in info)
+                {
+                    if (f.Name.Contains(".meta"))
+                    {
+                        continue;
+                    }
+                    if (f.Name.Contains(file_name))
+                    {
+                        found = true;
+                        return;
+                    }
+                }
+            }
+            );
+
+            return found;
+        }
     }
 }
 
