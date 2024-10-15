@@ -14,6 +14,7 @@ using System.Net;
 using System.Threading;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode;
+using UnityEngine.Analytics;
 
 #if UNITY_WEBGL
 using WeChatWASM;
@@ -281,64 +282,54 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
         public static bool EditorFileExist(string sub_dir, string file_name)
         {
             var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
-            entries.Append(Application.dataPath + "/" + sub_dir + "/");
 
             bool found = false;
             entries.ForEach(c =>
             {
-                if (c.Contains('.'))
+                if (c.Contains(".meta"))
                 {
                     return;
                 }
-                FileInfo[] info = new DirectoryInfo(c).GetFiles("*.*");
-                foreach (FileInfo f in info)
+                if (c.Contains(file_name))
                 {
-                    if (f.Name.Contains(".meta"))
-                    {
-                        continue;
-                    }
-                    if (f.Name.Contains(file_name))
-                    {
-                        found = true;
-                        return;
-                    }
+                    found = true;
+                    return;
                 }
             }
             );
-
             return found;
         }
 
-        public static List<FileInfo> EditorGetAllFile(string sub_dir)
-        {
-            List<FileInfo> path = new List<FileInfo>();
-            var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
-            for (int i = 0; i < entries.Count; i++)
-            {
-                Debug.Log(entries[i]);
-            }
-            entries.Append(Application.dataPath + "/" + sub_dir + "/");
+        // public static List<FileInfo> EditorGetAllFile(string sub_dir)
+        // {
+        //     List<FileInfo> path = new List<FileInfo>();
+        //     var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
+        //     for (int i = 0; i < entries.Count; i++)
+        //     {
+        //         Debug.Log(entries[i]);
+        //     }
+        //     entries.Append(Application.dataPath + "/" + sub_dir + "/");
 
-            entries.ForEach(c =>
-            {
-                if (c.Contains('.'))
-                {
-                    return;
-                }
-                FileInfo[] info = new DirectoryInfo(c).GetFiles("*.*");
-                foreach (FileInfo f in info)
-                {
-                    if (f.Name.Contains(".meta"))
-                    {
-                        continue;
-                    }
-                    path.Add(f);
-                }
-            }
-            );
+        //     entries.ForEach(c =>
+        //     {
+        //         if (c.Contains('.'))
+        //         {
+        //             return;
+        //         }
+        //         FileInfo[] info = new DirectoryInfo(c).GetFiles("*.*");
+        //         foreach (FileInfo f in info)
+        //         {
+        //             if (f.Name.Contains(".meta"))
+        //             {
+        //                 continue;
+        //             }
+        //             path.Add(f);
+        //         }
+        //     }
+        //     );
 
-            return path;
-        }
+        //     return path;
+        // }
     }
 }
 
