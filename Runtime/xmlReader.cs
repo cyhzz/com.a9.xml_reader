@@ -281,7 +281,7 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
         public static bool EditorFileExist(string sub_dir, string file_name)
         {
             var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
-            entries.Append(Application.dataPath + "/" + sub_dir);
+            entries.Append(Application.dataPath + "/" + sub_dir + "/");
 
             bool found = false;
             entries.ForEach(c =>
@@ -313,7 +313,7 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
         {
             List<FileInfo> path = new List<FileInfo>();
             var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
-            entries.Append(Application.dataPath + "/" + sub_dir);
+            entries.Append(Application.dataPath + "/" + sub_dir + "/");
 
             entries.ForEach(c =>
             {
