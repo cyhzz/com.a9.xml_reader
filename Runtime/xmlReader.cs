@@ -283,6 +283,7 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
             List<string> cps = new List<string>();
             List<string> path = new List<string>();
             var entries = Directory.GetFileSystemEntries(Application.dataPath + "/" + sub_dir, "*", SearchOption.AllDirectories).ToList();
+            entries.Append(Application.dataPath + "/" + sub_dir);
 
             bool found = false;
             entries.ForEach(c =>
