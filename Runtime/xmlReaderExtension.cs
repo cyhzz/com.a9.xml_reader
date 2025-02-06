@@ -82,7 +82,7 @@ namespace Com.A9.FileReader
         public static (string, List<string>)[] CreateColArrayWithExcel(string internet, string table)
         {
             int columnNum = 0, rowNum = 0;
-            DataRowCollection collect = xmlReader.ReadExcel(xmlReader.game_data_path, table, ref columnNum, ref rowNum);
+            DataRowCollection collect = xmlReader.ReadExcel(internet, table, ref columnNum, ref rowNum);
 
             (string, List<string>)[] items = new (string, List<string>)[columnNum];
 
