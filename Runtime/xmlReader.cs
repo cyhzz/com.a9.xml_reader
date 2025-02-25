@@ -100,11 +100,15 @@ namespace Com.A9.FileReader
         }
 #endif
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL 
         public static void Delete(string fileName)
         {
             WXFileSystemManager fs = WX.GetFileSystemManager();
-            fs.Delete(WX.env.USER_DATA_PATH + "/" + fileName);
+            // WX.env.USER_DATA_PATH + "/" + fileName
+            fs.RemoveSavedFile(new RemoveSavedFileOption()
+            {
+                filePath = WX.env.USER_DATA_PATH + "/" + fileName
+            });
             Debug.Log("delete wechat local storage " + WX.env.USER_DATA_PATH);
         }
 #else
