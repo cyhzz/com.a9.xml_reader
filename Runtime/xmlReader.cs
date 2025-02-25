@@ -103,7 +103,6 @@ namespace Com.A9.FileReader
 #if UNITY_WEBGL && !UNITY_EDITOR
         public static void Delete(string fileName)
         {
-            string json = JsonConvert.SerializeObject(t);
             WXFileSystemManager fs = WX.GetFileSystemManager();
             fs.Delete(WX.env.USER_DATA_PATH + "/" + fileName);
             Debug.Log("delete wechat local storage " + WX.env.USER_DATA_PATH);
