@@ -15,6 +15,9 @@ using System.Threading;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode;
 using UnityEngine.Analytics;
+#if UNITY_EDITOR
+using ClosedXML.Excel;
+#endif
 
 #if UNITY_WEBGL
 using WeChatWASM;
@@ -46,6 +49,14 @@ namespace Com.A9.FileReader
         // #endif
         //         game_data_path = Application.dataPath + $"/Resources/GameData/TheTable.xlsx";
         //     }
+#if UNITY_EDITOR
+        public static void SaveAsExcel<T>(string fileName, DataTable dt)
+        {
+            XLWorkbook wb = new XLWorkbook();
+            wb.Worksheets.Add(dt, "WorksheetName");
+            wb.SaveAs(path + fileName);
+        }
+#endif
 
         public static void SaveAsXml<T>(string fileName, T t)
         {
