@@ -262,7 +262,7 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
             }
         }
 
-        public static T CloneJson<T>(this T source)
+        public static T CloneJson<T>(this T source, bool ignore_ignore_attr = false)
         {
             if (ReferenceEquals(source, null)) return default;
 
@@ -276,8 +276,12 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
                 ObjectCreationHandling = ObjectCreationHandling.Replace
             };
 
-            serializeSettings.ContractResolver = new JsonIgnoreAttributeIgnorerContractResolver();
-            deserializeSettings.ContractResolver = new JsonIgnoreAttributeIgnorerContractResolver();
+            if (ignore_ignore_attr == false)
+            {
+                serializeSettings.ContractResolver = new JsonIgnoreAttributeIgnorerContractResolver();
+                deserializeSettings.ContractResolver = new JsonIgnoreAttributeIgnorerContractResolver();
+            }
+
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source, serializeSettings), deserializeSettings);
         }
 
