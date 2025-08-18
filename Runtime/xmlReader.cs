@@ -31,9 +31,11 @@ namespace Com.A9.FileReader
 #if UNITY_EDITOR
         //For development
         public static string path = Application.dataPath + "/IO/";
+        public static string internet_path = Application.dataPath + "/IO/Json";
 #else
-    //For release
-         public static string path=Application.persistentDataPath+"/";
+        //For release
+        public static string path = Application.persistentDataPath + "/";
+        public static string internet_path=Application.persistentDataPath;
 #endif
         public static string game_data_path = Application.dataPath + $"/Resources/GameData/TheTable.xlsx";
 
