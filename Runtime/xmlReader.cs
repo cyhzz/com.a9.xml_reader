@@ -265,6 +265,8 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
         public static DataTable ReadExcelToDataTableFormatted(string filePath, string sheetName, ref int colNum, ref int rowNum)
         {
             var dt = new DataTable();
+            var version = typeof(ClosedXML.Excel.XLWorkbook).Assembly.GetName().Version;
+            Debug.Log(version);
 
             using (var workbook = new XLWorkbook(filePath))
             {
@@ -290,8 +292,8 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
                         var cell = row.Cell(j);
                         if (cell.HasFormula)
                         {
-                            var val = cell.ValueCached;
-                            dataRow[i] = val == null ? cell.FormulaA1 : val.ToString();
+                            var val = cell.GetFormattedString();
+                            dataRow[i] = val == null ? cell.FormulaA1 : val;
                         }
                         else
                         {
