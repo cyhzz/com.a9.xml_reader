@@ -262,6 +262,45 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
             }
         }
 
+        public static DataTable ReadExcelToDataTableFormatted(string filePath, string sheetName, ref int colNum, ref int rowNum)
+        {
+            var dt = new DataTable();
+
+            using (var workbook = new XLWorkbook(filePath))
+            {
+                var worksheet = workbook.Worksheet(sheetName);
+                bool firstRow = true;
+                colNum = worksheet.ColumnCount();
+                rowNum = worksheet.RowCount();
+
+                foreach (var row in worksheet.RowsUsed())
+                {
+                    if (firstRow)
+                    {
+                        // Add columns to DataTable based on header row
+                        foreach (var cell in row.CellsUsed())
+                        {
+                            dt.Columns.Add(cell.Value.ToString());
+                        }
+                        firstRow = false;
+                    }
+                    else
+                    {
+                        // Add data rows, using RichText for formatted values
+                        dt.Rows.Add();
+                        int i = 0;
+                        foreach (var cell in row.CellsUsed())
+                        {
+                            // Use RichText to get the formatted display value
+                            dt.Rows[dt.Rows.Count - 1][i] = cell.RichText.ToString();
+                            i++;
+                        }
+                    }
+                }
+            }
+            return dt;
+        }
+
         public static T CloneJson<T>(this T source, bool ignore_ignore_attr = false)
         {
             if (ReferenceEquals(source, null)) return default;
