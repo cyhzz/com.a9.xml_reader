@@ -292,7 +292,7 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
                         var cell = row.Cell(j);
                         if (cell.HasFormula)
                         {
-                            var val = cell.GetFormattedString();
+                            var val = cell.ValueCached;
                             dataRow[i] = val == null ? cell.FormulaA1 : val;
                         }
                         else
