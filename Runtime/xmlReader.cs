@@ -274,10 +274,8 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
                 rowNum = worksheet.LastRowUsed().RowNumber() - 1;
 
                 // Create columns based on the first row's number of cells
-                var firstRow = worksheet.FirstRowUsed();
-                int cellCount = firstRow.CellsUsed().Count();
 
-                for (int i = 0; i < cellCount; i++)
+                for (int i = 0; i < colNum; i++)
                 {
                     dt.Columns.Add("Col" + i, typeof(string));
                 }
@@ -287,7 +285,7 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
                 {
                     var dataRow = dt.NewRow();
                     int i = 0;
-                    for (int j = 0; j < cellCount; j++)
+                    for (int j = 0; j < colNum; j++)
                     {
                         dataRow[i] = row.Cell(j).RichText.ToString();
                         i++;
