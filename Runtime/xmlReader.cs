@@ -273,16 +273,26 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
                 colNum = worksheet.LastColumnUsed().ColumnNumber() - 1;
                 rowNum = worksheet.LastRowUsed().RowNumber() - 1;
 
+                // Create columns based on the first row's number of cells
+                var firstRow = worksheet.FirstRowUsed();
+                int cellCount = firstRow.CellsUsed().Count();
+
+                for (int i = 0; i < cellCount; i++)
+                {
+                    dt.Columns.Add("Col" + i, typeof(string));
+                }
+
+                // Fill data
                 foreach (var row in worksheet.RowsUsed())
                 {
-                    dt.Rows.Add();
+                    var dataRow = dt.NewRow();
                     int i = 0;
                     foreach (var cell in row.CellsUsed())
                     {
-                        // Use RichText to get the formatted display value
-                        dt.Rows[dt.Rows.Count - 1][i] = cell.RichText.ToString();
+                        dataRow[i] = cell.RichText.ToString();
                         i++;
                     }
+                    dt.Rows.Add(dataRow);
                 }
             }
             return dt;
