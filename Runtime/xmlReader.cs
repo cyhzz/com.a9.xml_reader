@@ -269,33 +269,19 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
             using (var workbook = new XLWorkbook(filePath))
             {
                 var worksheet = workbook.Worksheet(sheetName);
-                bool firstRow = true;
 
-                colNum = worksheet.LastColumnUsed().ColumnNumber();
-                rowNum = worksheet.LastRowUsed().RowNumber();
+                colNum = worksheet.LastColumnUsed().ColumnNumber() - 1;
+                rowNum = worksheet.LastRowUsed().RowNumber() - 1;
 
                 foreach (var row in worksheet.RowsUsed())
                 {
-                    if (firstRow)
+                    dt.Rows.Add();
+                    int i = 0;
+                    foreach (var cell in row.CellsUsed())
                     {
-                        // Add columns to DataTable based on header row
-                        foreach (var cell in row.CellsUsed())
-                        {
-                            dt.Columns.Add(cell.Value.ToString());
-                        }
-                        firstRow = false;
-                    }
-                    else
-                    {
-                        // Add data rows, using RichText for formatted values
-                        dt.Rows.Add();
-                        int i = 0;
-                        foreach (var cell in row.CellsUsed())
-                        {
-                            // Use RichText to get the formatted display value
-                            dt.Rows[dt.Rows.Count - 1][i] = cell.RichText.ToString();
-                            i++;
-                        }
+                        // Use RichText to get the formatted display value
+                        dt.Rows[dt.Rows.Count - 1][i] = cell.RichText.ToString();
+                        i++;
                     }
                 }
             }
