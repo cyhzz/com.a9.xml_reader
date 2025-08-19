@@ -270,8 +270,9 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
             {
                 var worksheet = workbook.Worksheet(sheetName);
                 bool firstRow = true;
-                colNum = worksheet.ColumnCount();
-                rowNum = worksheet.RowCount();
+
+                colNum = worksheet.LastColumnUsed().ColumnNumber();
+                rowNum = worksheet.LastRowUsed().RowNumber();
 
                 foreach (var row in worksheet.RowsUsed())
                 {
