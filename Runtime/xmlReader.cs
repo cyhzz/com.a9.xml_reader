@@ -287,7 +287,7 @@ public static void ReadJson<T>(string fileName, out T t, JsonSerializerSettings 
                     int i = 0;
                     for (int j = 1; j < colNum; j++)
                     {
-                        dataRow[i] = row.Cell(j).GetFormattedString();
+                        dataRow[i] = row.Cell(j).ValueCached;
                         i++;
                     }
                     dt.Rows.Add(dataRow);
