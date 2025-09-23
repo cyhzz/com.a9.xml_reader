@@ -15,9 +15,9 @@ using System.Threading;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode;
 using UnityEngine.Analytics;
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
 using ClosedXML.Excel;
-#endif
+// #endif
 
 #if UNITY_WEBGL
 // using WeChatWASM;
@@ -328,7 +328,6 @@ public static void ReadJson<T>(string fileName, out T t, bool full_type = false)
             t = items;
             r.Close();
         }
-#if UNITY_EDITOR
         public static DataRowCollection ReadExcel(string filePath, string table_name, ref int columnNum, ref int rowNum)
         {
             using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -389,7 +388,6 @@ public static void ReadJson<T>(string fileName, out T t, bool full_type = false)
             }
             return dt;
         }
-#endif
 
         public static T CloneJson<T>(this T source, bool ignore_ignore_attr = false)
         {
