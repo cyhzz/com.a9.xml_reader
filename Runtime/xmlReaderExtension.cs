@@ -111,7 +111,7 @@ namespace Com.A9.FileReader
             }
             return items;
         }
-    }
 #endif
+    }
 }
 
