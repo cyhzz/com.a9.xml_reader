@@ -15,9 +15,9 @@ using System.Threading;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode;
 using UnityEngine.Analytics;
-// #if UNITY_EDITOR
+#if UNITY_EDITOR
 using ClosedXML.Excel;
-// #endif
+#endif
 
 #if UNITY_WEBGL
 // using WeChatWASM;
