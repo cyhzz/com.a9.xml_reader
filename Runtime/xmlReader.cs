@@ -89,13 +89,28 @@ namespace Com.A9.FileReader
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-    public static void SaveAsJson<T>(string fileName, T t, bool full_type = false)
-    {
-        string json = JsonConvert.SerializeObject(t);
-        WXFileSystemManager fs = WX.GetFileSystemManager();
-        fs.WriteFileSync(WX.env.USER_DATA_PATH + "/" + fileName, json, "utf-8");
-        Debug.Log("save to local storage " + WX.env.USER_DATA_PATH);
-    }
+    // public static void SaveAsJson<T>(string fileName, T t, bool full_type = false)
+    // {
+    //     string json = JsonConvert.SerializeObject(t);
+    //     WXFileSystemManager fs = WX.GetFileSystemManager();
+    //     fs.WriteFileSync(WX.env.USER_DATA_PATH + "/" + fileName, json, "utf-8");
+    //     Debug.Log("save to local storage " + WX.env.USER_DATA_PATH);
+    // }
+
+        public static void SaveAsJson<T>(string fileName, T t, bool full_type = false)
+        {
+            if (full_type)
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+                string json = JsonConvert.SerializeObject(t, settings);
+                System.IO.File.WriteAllText(path + fileName, json);
+            }
+            else
+            {
+                string json = JsonConvert.SerializeObject(t);
+                System.IO.File.WriteAllText(path + fileName, json);
+            }
+        }
 #else
         public static void SaveAsJson<T>(string fileName, T t, bool full_type = false)
         {
