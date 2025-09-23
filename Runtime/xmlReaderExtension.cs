@@ -24,7 +24,7 @@ namespace Com.A9.FileReader
                 return Convert.ChangeType(value, tp);
             }
         }
-
+#if UNITY_EDITOR
         public static T[] CreateArrayWithExcel<T>(string internet, string table) where T : new()
         {
             int columnNum = 0, rowNum = 0;
@@ -112,5 +112,6 @@ namespace Com.A9.FileReader
             return items;
         }
     }
+#endif
 }
 
