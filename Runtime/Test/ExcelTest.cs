@@ -11,6 +11,7 @@ public class RwoCol
 }
 public class ExcelTest : MonoBehaviour
 {
+#if UNITY_EDITOR_OSX
     [ContextMenu("Test")]
     public void Test()
     {
@@ -24,4 +25,5 @@ public class ExcelTest : MonoBehaviour
         dt.Rows.Add(_ravi);
         xmlReader.SaveAsExcel<List<List<string>>>("test.xlsx", dt);
     }
+#endif
 }
