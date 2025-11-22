@@ -21,6 +21,10 @@ namespace Com.A9.FileReader
             }
             else
             {
+                if (value == null)
+                {
+                    return null;
+                }
                 return Convert.ChangeType(value, tp);
             }
         }
