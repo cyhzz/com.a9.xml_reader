@@ -68,6 +68,10 @@ namespace Com.A9.FileReader
                                 {
                                     val = 0;
                                 }
+                                else
+                                {
+                                    val = default;
+                                }
                             }
                             cols[j].SetValue(box, SmartConvert(val, tp));
                             item = (T)box;
