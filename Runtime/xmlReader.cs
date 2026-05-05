@@ -319,6 +319,14 @@ public static void ReadJson<T>(string fileName, out T t, bool full_type = false)
             }
         }
 #endif
+        public static bool Exist<T>(string fileName)
+        {
+            if (!File.Exists(path + fileName))
+            {
+                return false;
+            }
+            return true;
+        }
         public static void ReadJsonByPath<T>(string fileName, out T t)
         {
             StreamReader r = null;
