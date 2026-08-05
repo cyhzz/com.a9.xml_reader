@@ -29,7 +29,7 @@ namespace Com.A9.FileReader
             }
         }
 #if UNITY_EDITOR
-        public static T[] CreateArrayWithExcel<T>(string internet, string table) where T : new()
+        public static T[] CreateArrayWithExcel<T>(string internet, string table, bool debug = false) where T : new()
         {
             int columnNum = 0, rowNum = 0;
             DataRowCollection collect = null;
@@ -76,6 +76,10 @@ namespace Com.A9.FileReader
                                 {
                                     val = default;
                                 }
+                            }
+                            if (debug)
+                            {
+                                Debug.Log($"[xmlReaderExtension] {itm.Key} : {val} ");
                             }
                             cols[j].SetValue(box, SmartConvert(val, tp));
                             item = (T)box;
